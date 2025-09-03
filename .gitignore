@@ -1,0 +1,19 @@
+mi_git_readme.md
+mi_readme.md
+# Archivos temporales
+*.pyc
+__pycache__/
+
+# Archivos de configuración local
+.env
+config_local.json
+
+# Bases de datos temporales
+*.sqlite3
+
+# Capturas o reportes generados
+*.png
+*.log
+
+# Entorno virtual
+venv/
