@@ -8,6 +8,7 @@ from validacion.validar import format_currency
 
 
 def llenar_tabla_inventario(treeview):
+    limpiar_treeview(treeview)
     productos = consultar_inventario()
     contador = 1
     for producto in productos:
@@ -19,10 +20,11 @@ def llenar_tabla_inventario(treeview):
         treeview.insert("", tk.END, values=(contador, id, codigo, nombre, stock, precio))
         contador += 1
 
+def limpiar_treeview(tabla_treeview):
+    for item in tabla_treeview.get_children():
+        tabla_treeview.delete(item)
 
 
-
-print("desde tabla_inventario")
 
 
 

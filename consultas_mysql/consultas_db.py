@@ -1,7 +1,6 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from consultas_mysql.conexion_mysql import obtener_conexion_db
 import tkinter as tk
 from tkinter import messagebox
@@ -18,7 +17,7 @@ def consultar_un_producto(cod):
         return
     cursor = conn.cursor()
     cursor.execute("SELECT p.ID_producto, p.codigo, p.nombre, s.stock, p.precio \
-                   FROM productos AS p JOIN stock s ON s.ID_producto = p.ID_producto\
+                   FROM productos AS p LEFT JOIN stock s ON s.ID_producto = p.ID_producto\
                     WHERE p.codigo = %s ;", (codigo,))
     resultado_consulta = cursor.fetchall()
     if resultado_consulta:
@@ -46,9 +45,9 @@ def consultar_inventario():
         return resultado# devuelve una lista con tuplas
     conn.close()
 
-# datos_producto = consultar_inventario()
+# datos_producto = consultar_un_producto(101015)
 # print(datos_producto)
-print("desde consultas")
+# print("desde consultas")
 
 
 

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from tablas.tabla_inventario import llenar_tabla_inventario
 from tablas.tabla_busqueda import llenar_tabla_busqueda
+from tablas.tabla_principal import llenar_tabla_principal
 
 
 
@@ -22,28 +23,42 @@ def main():
     label_codigo.grid(row=1, column=0, padx=10, pady=10)
     
     entry_codigo = ttk.Entry()
+    entry_codigo.bind("<Return>", lambda event: llenar_tabla_principal(
+                treeview_tabla_principal, entry_codigo.get(),entry_cantidad.get(), 
+                entry_codigo, entry_cantidad, label_total_1))
     entry_codigo.grid(row=1, column=1, padx=10, pady=10)
 
     label_cantidad = tk.Label(root, text="Cantidad :")
     label_cantidad.grid(row=2, column=0, padx=10, pady=10)
     
-    entry_nombre_cliente = ttk.Entry()
-    entry_nombre_cliente.grid(row=2, column=1, padx=10, pady=10)
+    entry_cantidad = ttk.Entry()
+    entry_cantidad.grid(row=2, column=1, padx=10, pady=10)
+    entry_cantidad.bind("<Return>", lambda event: llenar_tabla_principal(
+                treeview_tabla_principal, entry_codigo.get(),entry_cantidad.get(), 
+                entry_codigo, entry_cantidad, label_total_1))
+    entry_cantidad.insert(0,1)
 
-    boton_agregar = ttk.Button(root, text="Agregar")
+    boton_agregar = ttk.Button(root, text="Agregar", 
+                command= lambda: llenar_tabla_principal(
+                treeview_tabla_principal, entry_codigo.get(), 
+                entry_cantidad.get(), entry_codigo, entry_cantidad, label_total_1))   
     boton_agregar.grid(row= 2, column=2, padx=10, pady=10)
 
-    boton_agregar = ttk.Button(root, text="Quitar")
-    boton_agregar.grid(row= 2, column=3, padx=10, pady=10)
+    boton_quitar = ttk.Button(root, text="Quitar")
+    boton_quitar.grid(row= 2, column=3, padx=10, pady=10)
 
-    boton_agregar = ttk.Button(root, text="Confirmar")
-    boton_agregar.grid(row= 2, column=4, padx=10, pady=10)
+    boton_confirmar = ttk.Button(root, text="Confirmar")
+    boton_confirmar.grid(row= 2, column=4, padx=10, pady=10)
 
-    boton_agregar = ttk.Button(root, text="Cancelar")
-    boton_agregar.grid(row= 2, column=5, padx=10, pady=10)
+    boton_cancelar = ttk.Button(root, text="Cancelar")
+    boton_cancelar.grid(row= 2, column=5, padx=10, pady=10)
+
+    label_total_1 = tk.Label(root, text= "Total : ")
+    label_total_1.grid(row=1, column=2, columnspan=2, padx=10, pady=10)
+    label_total_1.config(font=("Arial", 14, "bold"), fg="black")
 
     treeview_tabla_principal = ttk.Treeview(root, columns=("id", "nombre", "cantidad",
-                                    "precio", "total"), show="headings")
+                "precio", "total"), show="headings")
     treeview_tabla_principal.grid(row=3, column=0, rowspan=10 , columnspan=6, padx=10, pady=10)
     treeview_tabla_principal.heading("id", text="ID")
     treeview_tabla_principal.heading("nombre", text="Nombre")
@@ -64,11 +79,13 @@ def main():
     radiobuton_efectivo.grid(row=13, column=0, padx=10, pady=10)
 
     
-    radiobuton_efectivo_transferencia = ttk.Radiobutton(root, text="Efectivo-tranferencia", variable=radiobuton_var, value=2)
+    radiobuton_efectivo_transferencia = ttk.Radiobutton(root, text="Efectivo-tranferencia", 
+                variable=radiobuton_var, value=2)
     radiobuton_efectivo_transferencia.grid(row=13, column=1, padx=10, pady=10)
 
     
-    radiobuton_transferencia = ttk.Radiobutton(root, text="Tranferencia", variable=radiobuton_var, value=3)
+    radiobuton_transferencia = ttk.Radiobutton(root, text="Tranferencia", 
+                variable=radiobuton_var, value=3)
     radiobuton_transferencia.grid(row=13, column=2, padx=10, pady=10)
 
         
@@ -109,7 +126,8 @@ def main():
 
     #---------------- PRIMER PESTAÑA---------------------------------------------------
 
-    boton_actualizar_tabla_stock_precio = ttk.Button(frame_notebook1, text="Actualizar",  command=lambda: llenar_tabla_inventario(treeview_tabla_stcok_precio))
+    boton_actualizar_tabla_stock_precio = ttk.Button(frame_notebook1, text="Actualizar", 
+                command=lambda: llenar_tabla_inventario(treeview_tabla_stcok_precio))
     boton_actualizar_tabla_stock_precio.pack()
 
     treeview_tabla_stcok_precio = ttk.Treeview(frame_notebook1, columns=(" ", "id", "codigo", 
@@ -126,6 +144,8 @@ def main():
     treeview_tabla_stcok_precio.column("codigo", width=80, anchor="center")
     treeview_tabla_stcok_precio.column("stock", width=50, anchor="center")
     treeview_tabla_stcok_precio.column("precio", width=100, anchor="center")
+
+    llenar_tabla_inventario(treeview_tabla_stcok_precio)
 
     frame_botones1 = ttk.Frame(frame_notebook1)
     frame_botones1.pack()

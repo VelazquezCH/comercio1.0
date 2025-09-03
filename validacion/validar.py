@@ -19,5 +19,5 @@ def format_currency(value):
         return value
     
 
-print("desde validar")
+# print("desde validar")
 # print(pasar_int(1010.256))

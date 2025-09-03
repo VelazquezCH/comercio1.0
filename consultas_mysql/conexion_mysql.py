@@ -17,7 +17,7 @@ def obtener_conexion_db():
 
 # conn.close()
 
-print("desde conexio_mysql")
+
 
 
 
