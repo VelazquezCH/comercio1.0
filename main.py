@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from tablas.tabla_inventario import llenar_tabla_inventario
 from tablas.tabla_busqueda import llenar_tabla_busqueda
-from tablas.tabla_principal import llenar_tabla_principal
+from tablas.tabla_principal import llenar_tabla_principal, suma_total
+from button.quitar import quitar_select
+from validacion.validar import calcular_con_transferencia
 
 
 
@@ -44,7 +46,8 @@ def main():
                 entry_cantidad.get(), entry_codigo, entry_cantidad, label_total_1))   
     boton_agregar.grid(row= 2, column=2, padx=10, pady=10)
 
-    boton_quitar = ttk.Button(root, text="Quitar")
+    boton_quitar = ttk.Button(root, text="Quitar", command= lambda:quitar_select
+                              (treeview_tabla_principal, label_total_1))
     boton_quitar.grid(row= 2, column=3, padx=10, pady=10)
 
     boton_confirmar = ttk.Button(root, text="Confirmar")
@@ -92,21 +95,22 @@ def main():
     label_efectivo = ttk.Label(root, text="Monto :")
     label_efectivo.grid(row=14, column=0, padx=10, pady=10)
 
-    entry_efectivo = ttk.Entry()
+    entry_efectivo = ttk.Entry(root)
     entry_efectivo.grid(row=14, column=1, padx=10, pady=10)
+    entry_efectivo.insert(0,0)
 
-    label_transferencia = ttk.Label(root, text="Transferencia :")
-    label_transferencia.grid(row=14, column=2, padx=10, pady=10)
-
-    entry_transferencia = ttk.Entry(root)
-    entry_transferencia.grid(row=14, column=3, padx=10, pady=10)
+    button_calcular = ttk.Button(root, text="Calcular", 
+                command= lambda:calcular_con_transferencia(radiobuton_var, 
+                suma_total(treeview_tabla_principal, label_total), 
+                entry_efectivo, label_total, label_vuelto))
+    button_calcular.grid(row=14, column=2, padx=10, pady=10)
 
     label_vuelto = tk.Label(root, text= "Vuelto: 0")
-    label_vuelto.grid(row=14, column=4, padx=10, pady=10)
+    label_vuelto.grid(row=14, column=3, columnspan=2 , padx=10, pady=10)
     label_vuelto.config(font=("Arial", 14, "bold"), fg="red")
 
-    label_total = tk.Label(root, text= "Total : ")
-    label_total.grid(row=13, column=4, padx=10, pady=10)
+    label_total = tk.Label(root, text= f"Total :  ")
+    label_total.grid(row=13, column=3, columnspan=2 , padx=10, pady=10)
     label_total.config(font=("Arial", 14, "bold"), fg="red")
 
 
