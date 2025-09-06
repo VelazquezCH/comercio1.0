@@ -4,6 +4,7 @@ from tablas.tabla_inventario import llenar_tabla_inventario
 from tablas.tabla_busqueda import llenar_tabla_busqueda
 from tablas.tabla_principal import llenar_tabla_principal, suma_total
 from button.quitar import quitar_select
+from button.button_cancelar import button_cancelar
 from validacion.validar import calcular_con_transferencia
 
 
@@ -53,7 +54,9 @@ def main():
     boton_confirmar = ttk.Button(root, text="Confirmar")
     boton_confirmar.grid(row= 2, column=4, padx=10, pady=10)
 
-    boton_cancelar = ttk.Button(root, text="Cancelar")
+    boton_cancelar = ttk.Button(root, text="Cancelar", command= lambda:
+                button_cancelar(treeview_tabla_principal, label_total_1, 
+                label_total, label_vuelto, entry_efectivo))
     boton_cancelar.grid(row= 2, column=5, padx=10, pady=10)
 
     label_total_1 = tk.Label(root, text= "Total : ")

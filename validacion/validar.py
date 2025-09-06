@@ -28,15 +28,21 @@ def calcular_con_transferencia(radiobutton_var, funcion, monto_entry, label_tota
     seleccion = radiobutton_var.get()
 
     if seleccion == 1:
+        if not monto > total:
+            messagebox.showinfo("Aviso", message="El monto debe ser mayor.")
+            return
         resultado = monto - total
         label_total.config(text=f"Total: ${total:,.2f}")
         label_vuelto.config(text=f"Vuelto: ${resultado:,.2f}")
         return total
 
     elif seleccion == 2:
+        if not monto > 0:
+            messagebox.showinfo("Aviso", message="El monto debe ser mayor.")
+            return
         resultado_efectivo = total - monto
         resultado_transferencia = resultado_efectivo + (resultado_efectivo * porcentaje / 100)
-        label_total.config(text=f"Total: ${total:,.2f}")
+        label_total.config(text=f"Fatal: ${resultado_efectivo:,.2f}")
         label_vuelto.config(text=f"Transferencia: ${resultado_transferencia:,.2f}")
         return resultado_efectivo, resultado_transferencia
 
@@ -44,6 +50,8 @@ def calcular_con_transferencia(radiobutton_var, funcion, monto_entry, label_tota
         resultado_transferencia = total + (total * porcentaje / 100)
         label_total.config(text=f"Total: ${total:,.2f}")
         label_vuelto.config(text=f"Transferencia: ${resultado_transferencia:,.2f}")
+        monto_entry.delete(0,tk.END)
+        monto_entry.insert(0,0)
         return 0, resultado_transferencia
 # print("desde validar")
 # print(pasar_int(1010.256))
