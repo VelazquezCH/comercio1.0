@@ -45,9 +45,23 @@ def consultar_inventario():
         return resultado# devuelve una lista con tuplas
     conn.close()
 
-# datos_producto = consultar_un_producto(101015)
-# print(datos_producto)
-# print("desde consultas")
 
+def insert_venta(cursor, nombre, fecha_hora, total):
+    """Agrega nombre, fecha, total de la compra a la tabla venta retorna 
+    ID_venta para hacer referancia en la tabla venta_producto"""
+    cursor.execute("INSERT INTO ventas (nombre, fecha, total) VALUES( %s, %s, %s)",
+                (nombre, fecha_hora,total))
+    cursor.execute("SELECT LAST_INSERT_ID();")
+    id_venta = cursor.fetchone()[0]
+    return id_venta
 
+def insert_venta_producto(cursor, id_venta, id_producto, cantidad, precio):
+    """Agrega id de venta, id producto, cantidad y precio a la tabla venta_producto"""
+    cursor.execute("INSERT INTO venta_producto (ID_venta, ID_producto, \
+                   cantidad, precio) VALUES (%s, %s, %s, %s)",
+                (id_venta, id_producto, cantidad, precio))
 
+def reducir_stock(cursor, cantidad, id):
+    """Actudaliza tabla de stock, desde la funcion confirmar,
+     ingresar cursor, cantidad e id_producto"""
+    cursor.execute("UPDATE stock SET stock = stock - %s where ID_producto = %s;",(cantidad, id))

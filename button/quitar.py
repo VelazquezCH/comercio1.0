@@ -1,5 +1,5 @@
 from tkinter import messagebox
-from tablas.tabla_principal import suma_total
+from tablas.tabla_principal import suma_total, label_total
 
 
 
@@ -11,7 +11,8 @@ def quitar_select(treeview, label):
         if respuesta:
             for item in seleccionados:
                 treeview.delete(item)
-            suma_total(treeview, label)
+            suma_total(treeview)
+            label_total(treeview, label)
     except ValueError:
         messagebox.showerror("Error", "Debe seleccionar un elemento a quitar.")
 

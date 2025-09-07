@@ -5,6 +5,7 @@ from tablas.tabla_busqueda import llenar_tabla_busqueda
 from tablas.tabla_principal import llenar_tabla_principal, suma_total
 from button.quitar import quitar_select
 from button.button_cancelar import button_cancelar
+from button.confirmar import confirmar
 from validacion.validar import calcular_con_transferencia
 
 
@@ -51,7 +52,9 @@ def main():
                               (treeview_tabla_principal, label_total_1))
     boton_quitar.grid(row= 2, column=3, padx=10, pady=10)
 
-    boton_confirmar = ttk.Button(root, text="Confirmar")
+    boton_confirmar = ttk.Button(root, text="Confirmar", command= lambda:confirmar
+                                 (treeview_tabla_principal, entry_nombre_cliente, label_total_1, 
+                label_total, label_vuelto, entry_efectivo))
     boton_confirmar.grid(row= 2, column=4, padx=10, pady=10)
 
     boton_cancelar = ttk.Button(root, text="Cancelar", command= lambda:
@@ -99,12 +102,15 @@ def main():
     label_efectivo.grid(row=14, column=0, padx=10, pady=10)
 
     entry_efectivo = ttk.Entry(root)
+    entry_efectivo.bind("<Return>", lambda event:calcular_con_transferencia(radiobuton_var, 
+                suma_total(treeview_tabla_principal), 
+                entry_efectivo, label_total, label_vuelto))
     entry_efectivo.grid(row=14, column=1, padx=10, pady=10)
     entry_efectivo.insert(0,0)
 
     button_calcular = ttk.Button(root, text="Calcular", 
                 command= lambda:calcular_con_transferencia(radiobuton_var, 
-                suma_total(treeview_tabla_principal, label_total), 
+                suma_total(treeview_tabla_principal), 
                 entry_efectivo, label_total, label_vuelto))
     button_calcular.grid(row=14, column=2, padx=10, pady=10)
 

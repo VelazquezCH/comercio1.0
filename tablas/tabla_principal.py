@@ -23,19 +23,23 @@ def llenar_tabla_principal(treeview, cod, cantidad, entry_cod, entry_cant, label
         total = format_currency(total)
         treeview.insert("", tk.END, values=(id, nombre, cantidad, precio, total))
         limpiar_campos(treeview, entry_cod, entry_cant)
-        suma_total(treeview, label)
+        label_total(treeview, label)
 
 def limpiar_campos(treeview, entry_cod, entry_cant):
     entry_cod.delete(0,tk.END)   
     entry_cant.delete(0,tk.END)
     entry_cant.insert(0,1)
 
-def suma_total(treeview, label):
+def suma_total(treeview):
     total_compra = 0
     for item in treeview.get_children():
         valores = treeview.item(item, "values")
         precio = valores[4]
         precio = float(precio.replace("$", "").replace(",", "").strip())
-        total_compra += precio
-    label.config(text=f"Total: ${total_compra:,.2f}")
+        total_compra += precio    
     return total_compra
+
+
+def label_total(treeview, label):
+    total_compra = suma_total(treeview)
+    label.config(text=f"Total: ${total_compra:,.2f}") 

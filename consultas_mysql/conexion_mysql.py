@@ -9,13 +9,7 @@ def obtener_conexion_db():
         passwd = "juanolijaz",
         database = "laura"
     )
-# conn = obtener_conexion_db()
-# cursor = conn.cursor()
 
-# if cursor:
-#     print("conexion exitosa")
-
-# conn.close()
 
 
 
