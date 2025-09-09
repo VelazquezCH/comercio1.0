@@ -7,6 +7,7 @@ from button.quitar import quitar_select
 from button.button_cancelar import button_cancelar
 from button.confirmar import confirmar
 from validacion.validar import calcular_con_transferencia
+from menu.ventana_agregar_stock import ventana_agregar_stock
 
 
 
@@ -14,6 +15,18 @@ from validacion.validar import calcular_con_transferencia
 def main():
     root = tk.Tk()
     root.title("Comercio Laura")
+
+    # --------------------------Crear barra de menú--------------------------
+    barra_menu = tk.Menu(root)
+    root.config(menu=barra_menu)
+
+    #--------------------------Menú de acciones--------------------------
+    menu_opciones = tk.Menu(barra_menu, tearoff=0)
+    barra_menu.add_cascade(label="Opciones", menu=menu_opciones)
+
+    menu_opciones.add_command(label="Agregar Stock", command=ventana_agregar_stock)
+    menu_opciones.add_separator()
+    menu_opciones.add_command(label="Salir", command=root.quit)
 
     #---------------------- widgets principales--------------------
 

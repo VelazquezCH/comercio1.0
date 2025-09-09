@@ -9,6 +9,7 @@ from validacion.validar import pasar_int
     
 
 def consultar_un_producto(cod):
+    """Consulta de la tabla. Introducir el número de codigo. Trae id, codigo, nombre, stock, precio"""
     codigo = pasar_int(cod)
     try:
         conn = obtener_conexion_db()
@@ -65,3 +66,16 @@ def reducir_stock(cursor, cantidad, id):
     """Actudaliza tabla de stock, desde la funcion confirmar,
      ingresar cursor, cantidad e id_producto"""
     cursor.execute("UPDATE stock SET stock = stock - %s where ID_producto = %s;",(cantidad, id))
+
+def insert_movimiento_producto_stock(cursor, id_producto, fecha_hora, cantidad):
+    cursor.execute("INSERT INTO movimiento_stock(ID_producto,fecha, cantidad)  \
+                VALUES (%s,%s,%s)",(id_producto, fecha_hora, cantidad))
+    
+def agregar_stock(cursor, cantidad, id_producto):
+    cursor.execute("UPDATE stock SET stock = stock + %s WHERE ID_producto = %s",(cantidad, id_producto))
+
+
+def obtener_cursor():
+    conn = obtener_conexion_db()
+    cursor = conn.cursor()
+    return conn, cursor
