@@ -8,7 +8,7 @@ from validacion.validar import format_currency
 
 def llenar_tabla_principal(treeview, cod, cantidad, entry_cod, entry_cant, label):
     try:
-        cod = int(cod)
+        cod = cod
         cantidad = int(cantidad)
     except ValueError:
         messagebox.showerror("Error", "Número incorecto")

@@ -10,7 +10,7 @@ from validacion.validar import pasar_int
 
 def consultar_un_producto(cod):
     """Consulta de la tabla. Introducir el número de codigo. Trae id, codigo, nombre, stock, precio"""
-    codigo = pasar_int(cod)
+    codigo = cod
     try:
         conn = obtener_conexion_db()
     except Exception:
@@ -30,6 +30,27 @@ def consultar_un_producto(cod):
         return id, codigo, nombre, stock, precio #retorna una tupla con id cod, nom, stock, precio
     else:
         messagebox.showerror("Error", "Producto no encontrado.")
+
+def consultar_un_producto_1(cod):
+    """Consulta de la tabla. Introducir el número de codigo. Trae id, codigo, nombre, stock, precio"""
+    codigo = cod
+    try:
+        conn = obtener_conexion_db()
+    except Exception:
+        messagebox.showerror("Error", "No se pudo establecer conexion a la base de datos")
+        return
+    cursor = conn.cursor()
+    cursor.execute("SELECT p.ID_producto, p.codigo, p.nombre, s.stock, p.precio \
+                   FROM productos AS p LEFT JOIN stock s ON s.ID_producto = p.ID_producto\
+                    WHERE p.codigo = %s ;", (codigo,))
+    resultado_consulta = cursor.fetchall()
+    if resultado_consulta:
+        id = resultado_consulta[0][0]
+        nombre = resultado_consulta[0][2]
+        stock = resultado_consulta[0][3]
+        precio = resultado_consulta[0][4]
+        conn.close()
+        return id, codigo, nombre, stock, precio #retorna una tupla con id cod, nom, stock, precio
     
 def consultar_inventario():
     try:
@@ -73,6 +94,7 @@ def insert_movimiento_producto_stock(cursor, id_producto, fecha_hora, cantidad):
     
 def agregar_stock(cursor, cantidad, id_producto):
     cursor.execute("UPDATE stock SET stock = stock + %s WHERE ID_producto = %s",(cantidad, id_producto))
+
 
 
 def obtener_cursor():

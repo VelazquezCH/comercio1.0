@@ -18,6 +18,17 @@ def format_currency(value):
     except ValueError:
         return value
     
+def parse_float_currency(text):
+    clean_text = text.replace('$', '').replace(',', '').strip()
+    try:
+        # Elimina el símbolo de dólar, espacios y comas
+        clean_text = float(clean_text)
+        return clean_text
+    except ValueError:
+        messagebox.showerror("Error", "Ocurrio un error, no pueder ser un número")
+        return 
+
+    
 def calcular_con_transferencia(radiobutton_var, funcion, monto_entry, label_total, label_vuelto):
     total = funcion
     try:

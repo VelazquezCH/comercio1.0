@@ -13,7 +13,7 @@ from datetime import datetime
 def ventana_agregar_stock():
     def aceptar():
         try:
-            cod = int(entry_codigo.get())
+            cod = entry_codigo.get()
             cantidad = int(entry_cantidad.get())
         except ValueError:
             messagebox.showerror("Error", "Solo nhúmeros")

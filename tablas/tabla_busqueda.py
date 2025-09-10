@@ -9,7 +9,7 @@ from validacion.validar import format_currency
 
 def llenar_tabla_busqueda(cod, treeview):
     try:
-        cod = int(cod)
+        cod = cod
     except ValueError:
         messagebox.showerror("Error", "Número incorrecto.")
         return
