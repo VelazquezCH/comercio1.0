@@ -9,6 +9,7 @@ from button.confirmar import confirmar
 from validacion.validar import calcular_con_transferencia
 from menu.ventana_agregar_stock import ventana_agregar_stock
 from menu.ventana_agregar_producto_ui import agregar_producto_db
+from menu.ventana_estadistica_descendente import estadistica
 
 
 
@@ -26,6 +27,7 @@ def main():
     menu_opciones = tk.Menu(barra_menu, tearoff=0)
     barra_menu.add_cascade(label="Opciones", menu=menu_opciones)
 
+    menu_opciones.add_command(label="Producto mas vendido", command=estadistica)
     menu_opciones.add_command(label="Agregar Stock", command=ventana_agregar_stock)
     menu_opciones.add_command(label="Agregar producto", command=agregar_producto_db)
     menu_opciones.add_separator()
